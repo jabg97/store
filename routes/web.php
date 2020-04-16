@@ -13,6 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+
+/*Route::get('/', function () {
+    return redirect()->route('store');
+});*/
+
+
+Route::resource('store','StoreController',
+[
+    'only' => ['index'],
+]
+);
+Route::resource('order','OrderController',
+    [
+        'except' => ['create'],
+    ]
+);
+Route::get('order/create/{id}', 'OrderController@create')->name('order.create');
