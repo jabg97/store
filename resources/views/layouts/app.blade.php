@@ -58,6 +58,7 @@
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/dashboard/scroll.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/dashboard/navbar-custom.js') }}"></script>
+    @include('sweet::alert')
     @yield('js_links')
 </body>
 

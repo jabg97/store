@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Model\Product;
 use App\Model\Order;
+use App\Model\PlaceToPay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use UxWeb\SweetAlert\SweetAlert;
 
 class OrderController extends Controller
 {
@@ -67,10 +69,10 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $products = Product::all();
-        return View::make('order.edit')->with(compact('order','products'));
+        return View::make('order.edit')->with(compact('order', 'products'));
     }
 
-    public function update($id,Request $request)
+    public function update($id, Request $request)
     {
         try {
             $rules = array(
@@ -99,9 +101,34 @@ class OrderController extends Controller
         }
     }
 
+    public function session($id)
+    {
+        try {
+            $order = Order::findOrFail($id);
+            $place_to_pay = PlaceToPay::init();
+            $request = PlaceToPay::getTestRequest($order);
+            $response = $place_to_pay->request($request);
+            if ($response->isSuccessful()) {
+                $order->request_id = $response->requestId;
+                $order->save();
+                return response()->json(['status' => 200,
+                 'url' => $response->processUrl,
+                  'message' => $response->toArray()["status"]["message"]]);
+            } else {
+                return response()->json(['status' => 500,
+                 'message' => $response->toArray()["status"]["message"]]);
+            }
+        } catch (Throwable $e) {
+            return response()->json(['status' => 500, 'message' => $e->getMessage()]);
+        }
+    }
+
     public function show($id)
     {
-        $order = Order::findOrFail($id);    
+        $order = Order::findOrFail($id);
+        if ($order->request_id && $order->status != "PAYED") {
+            $this->updateStatus($order);
+        }
         return View::make('order.show')->with(compact('order'));
     }
 
@@ -110,7 +137,23 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $order->delete();
-        Alert::success('Exito', 'La orden #' . $order->id . ' ha sido eliminada.');
-        return Redirect::to('grados');
+        SweetAlert::success("La Orden #".$id." ha sido eliminada.","Exito");
+        return Redirect::to('order');
+    }
+
+    private function updateStatus($order)
+    {
+        $place_to_pay = PlaceToPay::init();
+        $response = $place_to_pay->query($order->request_id);
+        $status = $response->toArray()["status"]["status"];
+        $message = $response->toArray()["status"]["message"];
+        if ($response->payment || $status == "PENDING") {
+            if ($status == "APPROVED") {
+                $status = "PAYED";
+            }
+            $order->status = $status;
+            $order->save();
+        }
+        return $message;
     }
 }

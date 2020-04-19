@@ -15,11 +15,12 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('costumer_name', 80);
+            $table->string('costumer_name', 80);          
             $table->string('costumer_email', 120);
             $table->string('costumer_mobile', 40);
             $table->string('status', 20);
             $table->unsignedBigInteger('product_id');
+            $table->string('request_id', 20)->nullable()->unique();
             $table->foreign('product_id')->references('id')->on('products');
             $table->timestamps();
             $table->softDeletes();

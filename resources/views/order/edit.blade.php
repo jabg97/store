@@ -20,7 +20,7 @@
 
             <form id="order_form" method="POST" action="#" accept-charset="UTF-8">
                 <input type="hidden" id="url_send" name="url_send" value="{{ route('order.update',$order->id) }}" />
-                <input type="hidden" id="_method" name="_method" value="PUT" />
+                <input type="hidden" name="_method" value="PUT"/>
                 <div class="modal-body">
                     <div class="text-center">
                         <i class="fas fa-pencil-alt fa-4x mb-3 animated rotateIn text-warning"></i>

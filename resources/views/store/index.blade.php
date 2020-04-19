@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.main')
 @section('template_title')
-Grados eliminados | {{ config('app.name', 'Laravel') }}
+Página principal | {{ config('app.name', 'Laravel') }}
 @endsection
 @section('css_links')
 <link rel="stylesheet" href="{{ asset('css/addons/select2.css') }}" type="text/css" />
@@ -93,7 +93,7 @@ Grados eliminados | {{ config('app.name', 'Laravel') }}
                                                 <div class="row mb-0">
                                                     <span class="float-left">
                                                         <h5 class="h5-responsive"><span
-                                                                class="badge badge-success hoverable">
+                                                                class="badge bg-color-gradient-success hoverable">
                                                                 @money($product->price)
                                                             </span></h5>
                                                     </span>

@@ -4,6 +4,9 @@
     src: url('../font/Cookie-Regular.ttf')  format('truetype');
     }
     
+td{ font-weight: 400 !important;}
+td:first-child{ font-weight: 900 !important;}
+
 
   .txt_cookie { 
     font-family: Cookie;

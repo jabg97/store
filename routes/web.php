@@ -32,3 +32,5 @@ Route::resource('order','OrderController',
     ]
 );
 Route::get('order/create/{id}', 'OrderController@create')->name('order.create');
+
+Route::put('order/session/{id}', 'OrderController@session')->name('p2p.session');

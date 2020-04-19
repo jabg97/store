@@ -14,13 +14,13 @@ class CreateCodesTable extends Migration
     public function up()
     {
         Schema::create('codes', function (Blueprint $table) {
-            //LLave compuesta por el codigo y el grupo al que pertenece
-            $table->string('id', 50);
+            $table->bigIncrements('id');
+            $table->string('code', 50);
             $table->string('group', 50);
             $table->string('name', 50);
             $table->string('css', 50)->nullable();
             $table->string('icon', 50)->nullable();
-            $table->primary(['id', 'group']);
+            $table->unique(array('code', 'group'));
             $table->timestamps();
             $table->softDeletes();
         });

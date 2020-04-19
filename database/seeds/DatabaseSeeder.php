@@ -25,38 +25,46 @@ class DatabaseSeeder extends Seeder
         }
 
         $code = new Code;
-        $code->id = 'CREATED';
+        $code->code = 'CREATED';
         $code->group = 'ORDER_STATUS';
         $code->name = 'Creada';
         $code->icon = 'far fa-calendar-plus';
-        $code->css = 'indigo';
+        $code->css = 'bg-color-gradient-primary';
         $code->save();
 
         $code = new Code;
-        $code->id = 'PAYED';
+        $code->code = 'PAYED';
         $code->group = 'ORDER_STATUS';
         $code->name = 'Pagada';
         $code->icon = 'far fa-calendar-check';
-        $code->css = 'teal';
+        $code->css = 'bg-color-gradient-success';
         $code->save();
 
         $code = new Code;
-        $code->id = 'REJECTED';
+        $code->code = 'PENDING';
+        $code->group = 'ORDER_STATUS';
+        $code->name = 'Pendiente';
+        $code->icon = 'fas fa-stopwatch';
+        $code->css = 'bg-color-gradient-warning';
+        $code->save();
+
+        $code = new Code;
+        $code->code = 'REJECTED';
         $code->group = 'ORDER_STATUS';
         $code->name = 'Rechazada';
         $code->icon = 'far fa-calendar-times';
-        $code->css = 'red';
+        $code->css = 'bg-color-gradient-danger';
         $code->save();
 
         /******************************/
         $code = new Code;
-        $code->id = 'NEW';
+        $code->code = 'NEW';
         $code->group = 'PRODUCT_STATE';
         $code->name = 'Nuevo';
         $code->save();
 
         $code = new Code;
-        $code->id = 'USED';
+        $code->code = 'USED';
         $code->group = 'PRODUCT_STATE';
         $code->name = 'Usado';
         $code->save();

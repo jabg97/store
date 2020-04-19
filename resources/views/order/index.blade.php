@@ -91,7 +91,12 @@ Lista de ordenes | {{ config('app.name', 'Laravel') }}
                                             <a class="link-text" href="tel:{{$order->costumer_mobile}}"><i
                                                     class="mr-1 fas fa-mobile-alt"></i>{{$order->costumer_mobile}}</a>
                                         </td>
-                                        <td>{{$order->product->name}}
+                                        <td>{{$order->product->name}}<br>
+                                            <span class="h5">
+                                                <span class="hoverable badge bg-color-gradient-success">
+                                                    @money($order->product->price)
+                                                </span>
+                                            </span>
                                         </td>
                                         <td>
                                             <h5>
@@ -109,7 +114,7 @@ Lista de ordenes | {{ config('app.name', 'Laravel') }}
                                                 title='Información de la orden #{{ $order->id }}'>
                                                 <i class="fas fa-2x fa-info-circle"></i>
                                             </a>
-
+                                            @if($order->status()->code == 'CREATED' || $order->status()->code == 'REJECTED')
                                             <a onclick="mostrar_modal('{{ route("order.edit",$order->id) }}','edit_order')"
                                                 class="text-warning m-1" data-toggle="tooltip" data-placement="bottom"
                                                 title='Editar la orden #{{ $order->id }}'>
@@ -123,9 +128,10 @@ Lista de ordenes | {{ config('app.name', 'Laravel') }}
                                             </a>
                                             <form id="eliminar{{ $order->id }}" method="POST"
                                                 action="{{ route('order.destroy',$order->id) }}" accept-charset="UTF-8">
-                                                <input name="_method" type="hidden" value="DELETE">
+                                                <input name="_method" type="hidden" value="DELETE"/>
                                                 {{ csrf_field() }}
                                             </form>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

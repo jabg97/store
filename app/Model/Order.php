@@ -33,7 +33,8 @@ class Order extends Model
         'costumer_email',
         'costumer_mobile',
         'status',
-        'product_id'
+        'product_id',
+        'request_id'
     ];
 
     /**
@@ -61,6 +62,6 @@ class Order extends Model
 
     public function status()
     {
-        return  Code::where('id', $this->status)->where('group', 'ORDER_STATUS')->first();
+        return  Code::where('code', $this->status)->where('group', 'ORDER_STATUS')->first();
     }
 }
