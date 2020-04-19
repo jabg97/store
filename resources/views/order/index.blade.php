@@ -114,7 +114,8 @@ Lista de ordenes | {{ config('app.name', 'Laravel') }}
                                                 title='Información de la orden #{{ $order->id }}'>
                                                 <i class="fas fa-2x fa-info-circle"></i>
                                             </a>
-                                            @if($order->status()->code == 'CREATED' || $order->status()->code == 'REJECTED')
+                                            @if($order->status()->code == 'CREATED' || $order->status()->code ==
+                                            'REJECTED')
                                             <a onclick="mostrar_modal('{{ route("order.edit",$order->id) }}','edit_order')"
                                                 class="text-warning m-1" data-toggle="tooltip" data-placement="bottom"
                                                 title='Editar la orden #{{ $order->id }}'>
@@ -128,7 +129,7 @@ Lista de ordenes | {{ config('app.name', 'Laravel') }}
                                             </a>
                                             <form id="eliminar{{ $order->id }}" method="POST"
                                                 action="{{ route('order.destroy',$order->id) }}" accept-charset="UTF-8">
-                                                <input name="_method" type="hidden" value="DELETE"/>
+                                                <input name="_method" type="hidden" value="DELETE" />
                                                 {{ csrf_field() }}
                                             </form>
                                             @endif
@@ -181,10 +182,10 @@ Lista de ordenes | {{ config('app.name', 'Laravel') }}
 <script type="text/javascript" src="{{ asset('js/addons/validation/messages_es.js') }}"></script>
 <script type="text/javascript">
     function eliminar_orden(id) {
-        swal({
+        Swal.fire({
             title: 'Eliminar la orden',
             text: '¿Desea eliminar la orden #' + id + '?',
-            type: 'question',
+            icon: 'question',
             confirmButtonText: '<i class="fas fa-trash-alt fa-lg"></i> Eliminar',
             cancelButtonText: '<i class="fas fa-times fa-lg"></i> Cancelar',
             showCancelButton: true,
@@ -198,9 +199,9 @@ Lista de ordenes | {{ config('app.name', 'Laravel') }}
             if (result.value) {
                 $("#eliminar" + id).submit();
             } else {
-                swal({
+                Swal.fire({
                     position: 'top-end',
-                    type: 'error',
+                    icon: 'error',
                     title: 'Operación cancelada por el usuario',
                     showConfirmButton: false,
                     toast: true,

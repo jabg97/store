@@ -37,6 +37,7 @@
 
     </style>
     @yield('css_links')
+    @laravelPWA
 </head>
 
 <body>
@@ -54,11 +55,11 @@
 
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/sweet.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/dashboard/scroll.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/dashboard/navbar-custom.js') }}"></script>
-    @include('sweet::alert')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    @include('sweetalert::alert')
     @yield('js_links')
 </body>
 

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
-use UxWeb\SweetAlert\SweetAlert;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
@@ -137,7 +137,7 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $order->delete();
-        SweetAlert::success("La Orden #".$id." ha sido eliminada.","Exito");
+        Alert::success("Exito", "La orden #".$id." ha sido eliminada.");
         return Redirect::to('order');
     }
 
@@ -153,7 +153,7 @@ class OrderController extends Controller
             }
             $order->status = $status;
             $order->save();
+            Alert::success("Exito", $message);
         }
-        return $message;
     }
 }

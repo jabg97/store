@@ -91,10 +91,10 @@ function cargar_div(url_send, method_send, data_send, div_target, asincronico, m
         })
         .fail(function (response) {
             console.log(response.responseJSON);
-            swal({
+            Swal.fire({
                 title: 'Error ' + response.status,
                 text: response.statusText,
-                type: 'error',
+                icon: 'error',
                 confirmButtonText: '<i class="fas fa-exclamation-triangle fa-lg"></i> Continuar',
                 showCloseButton: true,
                 confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',

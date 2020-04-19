@@ -13,20 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', 'StoreController@index')->name('index');
 
-
-
-/*Route::get('/', function () {
-    return redirect()->route('store');
-});*/
-
-
-Route::resource('store','StoreController',
-[
+Route::resource(
+    'store',
+    'StoreController',
+    [
     'only' => ['index'],
 ]
 );
-Route::resource('order','OrderController',
+Route::resource(
+    'order',
+    'OrderController',
     [
         'except' => ['create'],
     ]

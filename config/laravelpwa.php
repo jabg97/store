@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'name' => 'SRC',
+    'name' => 'Store',
     'manifest' => [
-        'name' => env('APP_NAME', 'SRC'),
-        'short_name' => 'SRC',
+        'name' => env('APP_NAME', 'Store'),
+        'short_name' => 'Store',
         'start_url' => env('APP_URL', '/'),
         'background_color' => '#153E4E',
         'theme_color' => '#153E4E',

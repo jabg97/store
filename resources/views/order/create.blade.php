@@ -133,7 +133,7 @@
 <!-- Central Modal Medium Info-->
 
 <script type="text/javascript">
- $(document).ready(function (e) {
+    $(document).ready(function (e) {
         $(".form-control").trigger("change");
     });
 
@@ -179,10 +179,10 @@
                 try {
                     console.log(response);
                     if (response.status == 200) {
-                        swal({
+                        Swal.fire({
                             title: 'Éxito',
                             text: response.message,
-                            type: 'success',
+                            icon: 'success',
                             confirmButtonText: '<i class="fas fa-check fa-lg"></i> Continuar',
                             showCloseButton: true,
                             confirmButtonClass: 'btn btn-success bg-color-gradient-success',
@@ -194,10 +194,10 @@
                         window.location.href = response.url;
 
                     } else {
-                        swal({
+                        Swal.fire({
                             title: 'Error ' + response.status,
                             text: response.message,
-                            type: 'error',
+                            icon: 'error',
                             confirmButtonText: '<i class="fas fa-exclamation-triangle fa-lg"></i> Continuar',
                             showCloseButton: true,
                             confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',
@@ -213,10 +213,10 @@
             })
             .fail(function (response) {
                 console.log(response.responseJSON);
-                swal({
+                Swal.fire({
                     title: 'Error ' + response.status,
                     text: response.statusText,
-                    type: 'error',
+                    icon: 'error',
                     confirmButtonText: '<i class="fas fa-exclamation-triangle fa-lg"></i> Continuar',
                     showCloseButton: true,
                     confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',

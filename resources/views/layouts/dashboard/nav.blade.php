@@ -36,7 +36,7 @@
                         <span>Menu</span>
                     </li>
                     <li class="hoverable waves-light {{ \Request::is('store') ? 'default' : 'simple' }}">
-                        <a href="{{route('store.index')}}">
+                        <a href="{{ route('index') }}">
                             <i class="fas fa-home"></i>
                             <span>Página principal</span>
                         </a>

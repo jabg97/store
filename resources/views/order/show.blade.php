@@ -158,10 +158,10 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
                 try {
                     console.log(response);
                     if (response.status == 200) {
-                        swal({
+                        Swal.fire({
                             title: 'Éxito',
                             text: response.message,
-                            type: 'success',
+                            icon: 'success',
                             confirmButtonText: '<i class="fas fa-check fa-lg"></i> Continuar',
                             showCloseButton: true,
                             confirmButtonClass: 'btn btn-success bg-color-gradient-success',
@@ -173,10 +173,10 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
                         window.location.href = response.url;
 
                     } else {
-                        swal({
+                        Swal.fire({
                             title: 'Error ' + response.status,
                             text: response.message,
-                            type: 'error',
+                            icon: 'error',
                             confirmButtonText: '<i class="fas fa-exclamation-triangle fa-lg"></i> Continuar',
                             showCloseButton: true,
                             confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',
@@ -192,10 +192,10 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
             })
             .fail(function (response) {
                 console.log(response.responseJSON);
-                swal({
+                Swal.fire({
                     title: 'Error ' + response.status,
                     text: response.statusText,
-                    type: 'error',
+                    icon: 'error',
                     confirmButtonText: '<i class="fas fa-exclamation-triangle fa-lg"></i> Continuar',
                     showCloseButton: true,
                     confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',
@@ -210,10 +210,10 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
     });
 
     function eliminar_orden(id) {
-        swal({
+        Swal.fire({
             title: 'Eliminar la orden',
             text: '¿Desea eliminar la orden #' + id + '?',
-            type: 'question',
+            icon: 'question',
             confirmButtonText: '<i class="fas fa-trash-alt fa-lg"></i> Eliminar',
             cancelButtonText: '<i class="fas fa-times fa-lg"></i> Cancelar',
             showCancelButton: true,
@@ -227,9 +227,9 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
             if (result.value) {
                 $("#eliminar" + id).submit();
             } else {
-                swal({
+                Swal.fire({
                     position: 'top-end',
-                    type: 'error',
+                    icon: 'error',
                     title: 'Operación cancelada por el usuario',
                     showConfirmButton: false,
                     toast: true,
@@ -242,10 +242,10 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
     }
 
     function pagar_orden(id) {
-        swal({
+        Swal.fire({
             title: 'Pagar la orden',
             text: '¿Desea Pagar la orden #' + id + '?',
-            type: 'question',
+            icon: 'question',
             confirmButtonText: '<i class="fas fa-cash-register fa-lg"></i> Pagar',
             cancelButtonText: '<i class="fas fa-times fa-lg"></i> Cancelar',
             showCancelButton: true,
@@ -259,9 +259,9 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
             if (result.value) {
                 $("#formulario_pagar").submit();
             } else {
-                swal({
+                Swal.fire({
                     position: 'top-end',
-                    type: 'error',
+                    icon: 'error',
                     title: 'Operación cancelada por el usuario',
                     showConfirmButton: false,
                     toast: true,

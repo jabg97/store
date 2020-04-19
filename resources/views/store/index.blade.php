@@ -26,7 +26,7 @@ Página principal | {{ config('app.name', 'Laravel') }}
                         <h5 class="d-flex justify-content-start">
                             <span>
                                 <i class="fas fa-home fa-lg"></i>
-                                <a href="{{ route("store.index") }}">Página principal</a>
+                                <a href="{{ route('index') }}">Página principal</a>
                                 /
                                 @if ($products->count() === 1)
                                 Un producto
