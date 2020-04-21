@@ -2,8 +2,8 @@
 
 namespace App\Model;
 
-use App\Http\Controllers\Controller;
 use Dnetix\Redirection\PlacetoPay as PlacetoPayLibrary;
+use App\Model\Order;
 
 class PlaceToPay
 {
@@ -22,6 +22,30 @@ class PlaceToPay
                 'connect_timeout' => 30,
             ]
         ]);
+    }
+
+    public static function sync()
+    {
+        $place_to_pay = self::init();
+        $orders = Order::whereNotNull('request_id')->whereIn('status', ['PENDING','CREATED'])->get();
+        foreach ($orders as $key => $order) {
+            try {
+                $response = $place_to_pay->query($order->request_id);
+                $status = $response->toArray()["status"]["status"];
+                $message = $response->toArray()["status"]["message"];
+                if ($response->payment || $status == "PENDING") {
+                    if ($status == "APPROVED") {
+                        $status = "PAYED";
+                    }
+                    if ($order->status != $status) {
+                        $order->status = $status;
+                        $order->save();
+                        $order->send($message);
+                    }
+                }
+            } catch (Throwable $e) {
+            }
+        }
     }
 
     public static function getTestRequest($order)

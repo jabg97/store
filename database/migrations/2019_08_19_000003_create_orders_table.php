@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('status', 20);
             $table->unsignedBigInteger('product_id');
             $table->string('request_id', 20)->nullable()->unique();
+            $table->string('process_url', 200)->nullable()->unique();
             $table->foreign('product_id')->references('id')->on('products');
             $table->timestamps();
             $table->softDeletes();

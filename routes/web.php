@@ -22,6 +22,7 @@ Route::resource(
     'only' => ['index'],
 ]
 );
+
 Route::resource(
     'order',
     'OrderController',
@@ -29,6 +30,6 @@ Route::resource(
         'except' => ['create'],
     ]
 );
-Route::get('order/create/{id}', 'OrderController@create')->name('order.create');
 
-Route::put('order/session/{id}', 'OrderController@session')->name('p2p.session');
+Route::get('order/create/{id}', 'OrderController@create')->name('order.create');
+Route::get('order/table/{status?}', 'OrderController@table')->name('order.table');

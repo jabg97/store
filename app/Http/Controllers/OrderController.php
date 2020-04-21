@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Model\Product;
 use App\Model\Order;
+use App\Model\Code;
 use App\Model\PlaceToPay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -20,8 +21,19 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::all();
-        return View::make('order.index')->with(compact('orders'));
+        return View::make('order.index');
+    }
+
+    public function table($status)
+    {
+        if ($status == "null") {
+            $orders = Order::all();
+        } else {
+            $orders = Order::where('status', $status)->get();
+        }
+        $list = Code::where('group', 'ORDER_STATUS')->get();
+        $status = Code::where('code', $status)->where('group', 'ORDER_STATUS')->first();
+        return View::make('order.table')->with(compact('orders', 'list', 'status'));
     }
 
     public function create($id)
@@ -101,33 +113,15 @@ class OrderController extends Controller
         }
     }
 
-    public function session($id)
-    {
-        try {
-            $order = Order::findOrFail($id);
-            $place_to_pay = PlaceToPay::init();
-            $request = PlaceToPay::getTestRequest($order);
-            $response = $place_to_pay->request($request);
-            if ($response->isSuccessful()) {
-                $order->request_id = $response->requestId;
-                $order->save();
-                return response()->json(['status' => 200,
-                 'url' => $response->processUrl,
-                  'message' => $response->toArray()["status"]["message"]]);
-            } else {
-                return response()->json(['status' => 500,
-                 'message' => $response->toArray()["status"]["message"]]);
-            }
-        } catch (Throwable $e) {
-            return response()->json(['status' => 500, 'message' => $e->getMessage()]);
-        }
-    }
 
     public function show($id)
     {
         $order = Order::findOrFail($id);
         if ($order->request_id && $order->status != "PAYED") {
-            $this->updateStatus($order);
+            try {
+                $this->updateStatus($order);
+            } catch (Throwable $e) {
+            }
         }
         return View::make('order.show')->with(compact('order'));
     }
@@ -151,9 +145,12 @@ class OrderController extends Controller
             if ($status == "APPROVED") {
                 $status = "PAYED";
             }
-            $order->status = $status;
-            $order->save();
-            Alert::success("Exito", $message);
+            if ($order->status != $status) {
+                $order->status = $status;
+                $order->save();
+                $order->send($message);
+                Alert::success("Exito", $message);
+            }
         }
     }
 }

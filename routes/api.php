@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
+
+Route::get('p2p/sync', 'PlaceToPayController@sync')->name('p2p.sync');
+Route::get('p2p/update/{id}', 'PlaceToPayController@update')->name('p2p.update');
+Route::put('p2p/session/{id}', 'PlaceToPayController@session')->name('p2p.session');

@@ -113,6 +113,17 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
                             </span>
                         </a>
                             @endif
+
+                            @if($order->process_url && ($order->status()->code == 'PENDING' ))
+                            <a class="list-group-item waves-effect hoverable">
+
+                            <span class="btn btn-outline-danger"
+                             onclick="document.location.href= '{{ $order->process_url }}'">
+
+                                <i class="fas fa-lg fa-sync"></i> Reintentar
+                            </span>
+                        </a>
+                            @endif
                         </div>
                     </div>
                 </div>

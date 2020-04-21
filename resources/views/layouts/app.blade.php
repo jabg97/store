@@ -61,6 +61,22 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     @include('sweetalert::alert')
     @yield('js_links')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            syncPlaceToPay();
+            setInterval(syncPlaceToPay, 1000*60);
+
+            function syncPlaceToPay() {
+                $.ajax({
+                    method: "GET",
+                    url: "{{ route('p2p.sync') }}",
+                    async: true
+                })
+                console.log('OK');
+            }
+        });
+
+    </script>
 </body>
 
 </html>

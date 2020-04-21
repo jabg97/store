@@ -4,6 +4,7 @@ use App\Model\Code;
 use App\Model\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Mail;
 
 class Order extends Model
 {
@@ -54,6 +55,25 @@ class Order extends Model
         'deleted_at',
     ];
 
+    public function send($msg)
+    {
+        $data = array(
+            'id' => $this->id,
+            'costumer_name' => $this->costumer_name,
+            'msg' => $msg,
+            'product' => $this->product->name,
+            'price' => $this->product->price,
+            'status' => $this->status()->name,
+            'link' => url('/')."/order/".$this->id
+        );
+
+        $from_email = "horariotps@gmail.com";
+        $from_name = "Store";
+        Mail::send('email.notification', $data, function ($message) use ($from_email, $from_name) {
+            $message->from($from_email, $from_name);
+            $message->to($this->costumer_email, $this->costumer_name)->subject('Actualización de estado');
+        });
+    }
 
     public function product()
     {
