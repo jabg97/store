@@ -76,6 +76,12 @@ class OrderController extends Controller
         }
     }
 
+    public function test($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->send("enviado");
+        dd("enviado");
+    }
 
     public function edit($id)
     {
