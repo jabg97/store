@@ -73,4 +73,4 @@ http://127.0.0.1/api/p2p/sync
 if you can't configure a cron job in your server, you can use services like 
 [https://cron-job.org](https://cron-job.org)
 
-if you can't make any those options, there is a javascript simulation into "app.blade.php" file, which make an ajax request every 60 seconds
+if you can't do any of these options, there is a javascript simulation into "app.blade.php" file, which send an ajax request every 60 seconds.
