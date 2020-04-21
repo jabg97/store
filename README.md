@@ -1,4 +1,4 @@
-# Evertec Test
+# Laravel PWA
 
 Laravel E-commerce with the PlacetoPay integration.
 
