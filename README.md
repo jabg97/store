@@ -74,3 +74,5 @@ if you can't configure a cron job in your server, you can use services like
 [https://cron-job.org](https://cron-job.org)
 
 if you can't do any of these options, there is a javascript simulation into "app.blade.php" file, which send an ajax request every 60 seconds.
+
+*NOTE: you should consider, you should consider, this only will work, when you are in the website, it doesn't work like a background task*
