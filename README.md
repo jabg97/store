@@ -54,3 +54,23 @@ php artisan migrate:fresh --seed
 ```
 php artisan serve
 ```
+
+## Sync information
+
+For sync pending orders you must configure a cronjob in your server and execute the following artisan command every minute.
+
+```
+php artisan p2p:sync
+```
+or you can make a request to the following route
+
+```
+YOUR_SERVER_BASE_URL/api/p2p/sync 
+```
+For example:
+http://127.0.0.1/api/p2p/sync
+
+if you can't configure a cron job in your server, you can use services like 
+[https://cron-job.org](https://cron-job.org)
+
+if you can't make any those options, there is a javascript simulation into "app.blade.php" file, which make an ajax request every 60 seconds
