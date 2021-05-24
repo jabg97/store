@@ -7,12 +7,12 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
 @endsection
 
 @section('content')
-@if($order->status()->code == 'CREATED' || $order->status()->code == 'REJECTED')
+
 <a href="javascript:void(0);" class="btn-float hoverable">
     <i class="fa fa-bars my-float"></i>
 </a>
 <ul class="ul-share">
-
+@if($order->status()->code == 'CREATED' || $order->status()->code == 'REJECTED')
     <li><small class="label-float hoverable">Pagar la orden</small>
         <a onclick="pagar_orden({{ $order->id }})" class="bg-color-gradient-success hoverable">
             <i class="fas fa-cash-register my-float"></i>
@@ -39,9 +39,15 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
             class="bg-color-gradient-warning hoverable">
             <i class="fas fa-pencil-alt my-float"></i>
         </a></li>
-
+        @elseif($order->status()->code == 'PENDING')
+        <li><small class="label-float hoverable">Ir a PlaceToPay</small>
+        <a onclick="document.location.href= '{{ $order->process_url }}'"
+            class="bg-color-gradient-info hoverable">
+            <i class="fas fa-external-link-alt my-float"></i>
+        </a></li>
+        @endif
 </ul>
-@endif
+
 <div class="container-fluid">
     <!--Grid row-->
     <div class="row">
@@ -104,25 +110,38 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
                                     </span>
                                 </span>
                             </a>
-                            @if($order->status()->code == 'CREATED' || $order->status()->code == 'REJECTED')
+                            @if($order->status()->code == 'CREATED')
                             <a class="list-group-item waves-effect hoverable">
 
-                            <span class="btn btn-outline-success" onclick="pagar_orden({{ $order->id }})">
+                                <span class="btn btn-outline-secondary" onclick="pagar_orden({{ $order->id }})">
 
-                                <i class="fas fa-lg fa-cash-register"></i> Pagar
-                            </span>
-                        </a>
-                            @endif
+                                    <i class="fas fa-lg fa-cash-register"></i> Pagar
+                                </span>
+                            </a>
+                            @elseif($order->process_url && ($order->status()->code == 'PENDING' ))
+                            <a class="list-group-item waves-effect hoverable"><strong>Expira:
+                                </strong>
+                                <span class="h5">
+                                    <span class="hoverable badge bg-color-gradient-info">
+                                        {{\Carbon\Carbon::createFromTimeStamp(strtotime($order->request_expiration))->diffForHumans()}}
+                                    </span>
+                                </span>
+                            </a>
+                           <a class="list-group-item waves-effect hoverable">
+                       <span class="btn btn-outline-primary"
+                                    onclick="document.location.href= '{{ $order->process_url }}'">
 
-                            @if($order->process_url && ($order->status()->code == 'PENDING' ))
+                                    <i class="fas fa-lg fa-external-link-alt"></i> Ir a PlaceToPay
+                                </span>
+                            </a>
+                            @elseif($order->status()->code == 'REJECTED')
                             <a class="list-group-item waves-effect hoverable">
 
-                            <span class="btn btn-outline-danger"
-                             onclick="document.location.href= '{{ $order->process_url }}'">
+                                <span class="btn btn-outline-danger" onclick="pagar_orden({{ $order->id }})">
 
                                 <i class="fas fa-lg fa-sync"></i> Reintentar
-                            </span>
-                        </a>
+                                </span>
+                            </a>
                             @endif
                         </div>
                     </div>
@@ -177,7 +196,6 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
                             showCloseButton: true,
                             confirmButtonClass: 'btn btn-success bg-color-gradient-success',
                             buttonsStyling: false,
-                            animation: false,
                             customClass: 'animated zoomIn',
                         });
 
@@ -192,7 +210,6 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
                             showCloseButton: true,
                             confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',
                             buttonsStyling: false,
-                            animation: false,
                             customClass: 'animated zoomIn',
                         });
                     }
@@ -211,7 +228,6 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
                     showCloseButton: true,
                     confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',
                     buttonsStyling: false,
-                    animation: false,
                     customClass: 'animated zoomIn',
                 });
             })
@@ -232,7 +248,6 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
             confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',
             cancelButtonClass: 'btn btn-dark bg-color-gradient-primary',
             buttonsStyling: false,
-            animation: false,
             customClass: 'animated zoomIn',
         }).then((result) => {
             if (result.value) {
@@ -244,7 +259,6 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
                     title: 'Operación cancelada por el usuario',
                     showConfirmButton: false,
                     toast: true,
-                    animation: false,
                     customClass: 'animated lightSpeedIn',
                     timer: 3000
                 })
@@ -255,7 +269,7 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
     function pagar_orden(id) {
         Swal.fire({
             title: 'Pagar la orden',
-            text: '¿Desea Pagar la orden #' + id + '?',
+            text: '¿Desea pagar la orden #' + id + '?',
             icon: 'question',
             confirmButtonText: '<i class="fas fa-cash-register fa-lg"></i> Pagar',
             cancelButtonText: '<i class="fas fa-times fa-lg"></i> Cancelar',
@@ -264,7 +278,6 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
             confirmButtonClass: 'btn btn-success bg-color-gradient-success',
             cancelButtonClass: 'btn btn-dark bg-color-gradient-primary',
             buttonsStyling: false,
-            animation: false,
             customClass: 'animated zoomIn',
         }).then((result) => {
             if (result.value) {
@@ -276,7 +289,6 @@ Información de la orden | {{ config('app.name', 'Laravel') }}
                     title: 'Operación cancelada por el usuario',
                     showConfirmButton: false,
                     toast: true,
-                    animation: false,
                     customClass: 'animated lightSpeedIn',
                     timer: 3000
                 })

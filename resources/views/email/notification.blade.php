@@ -1,6 +1,6 @@
 @extends('email.layout')
 @section('content')
-Hola {{$costumer_name}}.<br/>
+Hola {{$costumer_name}}.<br />
 
 La Orden #{{$id}} ha cambiado a estado ({{$status}}).
 <br><br>
@@ -10,6 +10,6 @@ La Orden #{{$id}} ha cambiado a estado ({{$status}}).
     {{$msg}}</div>
 <br><br>
 <a href="{{$link}}" style="padding: 10px; background-color: #3097D1; color: #fff;">
-Ver Orden</a>
+    Ver Orden</a>
 <br>
 @endsection

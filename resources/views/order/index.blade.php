@@ -87,7 +87,6 @@ Lista de ordenes | {{ config('app.name', 'Laravel') }}
             confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',
             cancelButtonClass: 'btn btn-dark bg-color-gradient-primary',
             buttonsStyling: false,
-            animation: false,
             customClass: 'animated zoomIn',
         }).then((result) => {
             if (result.value) {
@@ -99,7 +98,6 @@ Lista de ordenes | {{ config('app.name', 'Laravel') }}
                     title: 'Operación cancelada por el usuario',
                     showConfirmButton: false,
                     toast: true,
-                    animation: false,
                     customClass: 'animated lightSpeedIn',
                     timer: 3000
                 })
@@ -111,7 +109,7 @@ Lista de ordenes | {{ config('app.name', 'Laravel') }}
         $('[data-toggle="tooltip"]').tooltip()
     })
     $(document).ready(function () {
-        mostrar_div("{{ route('order.table','null') }}",'table');
+        mostrar_div("{{ route('order.table','null') }}", 'table');
     });
 
 </script>

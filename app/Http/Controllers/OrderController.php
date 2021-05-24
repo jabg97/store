@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Model\Product;
-use App\Model\Order;
 use App\Model\Code;
-use App\Model\PlaceToPay;
+use App\Model\Order;
+use App\Model\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -53,7 +52,7 @@ class OrderController extends Controller
                 'costumer_name' => 'required|max:80',
                 'costumer_email' => 'required|email|max:120',
                 'costumer_mobile' => 'required|max:40',
-                'product_id' => 'required|exists:products,id'
+                'product_id' => 'required|exists:products,id',
             );
 
             $validator = Validator::make($request->all(), $rules);
@@ -67,20 +66,14 @@ class OrderController extends Controller
                 $order->costumer_email = $request->costumer_email;
                 $order->costumer_mobile = $request->costumer_mobile;
                 $order->status = "CREATED";
+                $order->request_expiration = null;
                 $order->product()->associate($product);
                 $order->save();
-                return response()->json(['status' => 200,'url' => route('order.show', [$order->id]), 'message' => 'La orden #' . $order->id . ' ha sido registrada.']);
+                return response()->json(['status' => 200, 'url' => route('order.show', [$order->id]), 'message' => 'La orden #' . $order->id . ' ha sido registrada.']);
             }
         } catch (Throwable $e) {
             return response()->json(['status' => 500, 'message' => $e->getMessage()]);
         }
-    }
-
-    public function test($id)
-    {
-        $order = Order::findOrFail($id);
-        $order->send("enviado");
-        dd("enviado");
     }
 
     public function edit($id)
@@ -97,7 +90,7 @@ class OrderController extends Controller
                 'costumer_name' => 'required|max:80',
                 'costumer_email' => 'required|email|max:120',
                 'costumer_mobile' => 'required|max:40',
-                'product_id' => 'required|exists:products,id'
+                'product_id' => 'required|exists:products,id',
             );
 
             $validator = Validator::make($request->all(), $rules);
@@ -112,51 +105,25 @@ class OrderController extends Controller
                 $order->costumer_mobile = $request->costumer_mobile;
                 $order->product()->associate($product);
                 $order->save();
-                return response()->json(['status' => 200,'url' => route('order.show', [$order->id]), 'message' => 'La orden #' . $order->id . ' ha sido actualizada.']);
+                return response()->json(['status' => 200, 'url' => route('order.show', [$order->id]), 'message' => 'La orden #' . $order->id . ' ha sido actualizada.']);
             }
         } catch (Throwable $e) {
             return response()->json(['status' => 500, 'message' => $e->getMessage()]);
         }
     }
 
-
     public function show($id)
     {
         $order = Order::findOrFail($id);
-        if ($order->request_id && $order->status != "PAYED") {
-            try {
-                $this->updateStatus($order);
-            } catch (Throwable $e) {
-            }
-        }
         return View::make('order.show')->with(compact('order'));
     }
 
-    
     public function destroy($id)
     {
         $order = Order::findOrFail($id);
         $order->delete();
-        Alert::success("Exito", "La orden #".$id." ha sido eliminada.");
+        Alert::success("Exito", "La orden #" . $id . " ha sido eliminada.");
         return Redirect::to('order');
     }
 
-    private function updateStatus($order)
-    {
-        $place_to_pay = PlaceToPay::init();
-        $response = $place_to_pay->query($order->request_id);
-        $status = $response->toArray()["status"]["status"];
-        $message = $response->toArray()["status"]["message"];
-        if ($response->payment || $status == "PENDING") {
-            if ($status == "APPROVED") {
-                $status = "PAYED";
-            }
-            if ($order->status != $status) {
-                $order->status = $status;
-                $order->save();
-                $order->send($message);
-                Alert::success("Exito", $message);
-            }
-        }
-    }
 }

@@ -10,7 +10,7 @@ return [
     | file.
     | However, you can use its cdn if you want.
     |
-    */
+     */
 
     'cdn' => env('SWEET_ALERT_CDN'),
 
@@ -22,7 +22,7 @@ return [
     | This is for the all Modal windows.
     | For specific modal just use the autoClose() helper method.
     |
-    */
+     */
 
     'timer' => env('SWEET_ALERT_TIMER', 5000),
 
@@ -36,7 +36,7 @@ return [
     | The default width is 32rem.
     | This is for the all Modal windows.
     | for particular modal just use the width() helper method.
-    */
+     */
 
     'width' => env('SWEET_ALERT_WIDTH', '32rem'),
 
@@ -48,7 +48,7 @@ return [
     | If this behavior isn't compatible with your project's layout,
     | set heightAuto to false.
     |
-    */
+     */
 
     'height_auto' => env('SWEET_ALERT_HEIGHT_AUTO', true),
 
@@ -62,7 +62,7 @@ return [
     | The default padding is 1.25rem.
     | This is for the all Modal windows.
     | for particular modal just use the padding() helper method.
-    */
+     */
 
     'padding' => env('SWEET_ALERT_PADDING', '1.25rem'),
 
@@ -74,7 +74,7 @@ return [
     | If set to false, modal CSS animation will be use default ones.
     | For specific modal just use the animation() helper method.
     |
-    */
+     */
 
     'animation' => [
         'enable' => env('SWEET_ALERT_ANIMATION_ENABLE', false),
@@ -91,7 +91,7 @@ return [
     | This is for the all Modal windows.
     | For specific modal just use the showConfirmButton() helper method.
     |
-    */
+     */
 
     'show_confirm_button' => env('SWEET_ALERT_CONFIRM_BUTTON', true),
 
@@ -104,7 +104,7 @@ return [
     | This is for the all Modal windows.
     | For specific modal just use the showCloseButton() helper method.
     |
-    */
+     */
 
     'show_close_button' => env('SWEET_ALERT_CLOSE_BUTTON', false),
 
@@ -117,7 +117,7 @@ return [
     | 'center-end', 'bottom', 'bottom-start', or 'bottom-end'.
     | For specific modal just use the position() helper method.
     |
-    */
+     */
 
     'toast_position' => env('SWEET_ALERT_TOAST_POSITION', 'top-end'),
 
@@ -127,7 +127,7 @@ return [
     |--------------------------------------------------------------------------
     | Modal window or toast, config for the Middleware
     |
-    */
+     */
 
     'middleware' => [
 
@@ -146,7 +146,7 @@ return [
     |--------------------------------------------------------------------------
     | A custom CSS class for the modal:
     |
-    */
+     */
 
     'customClass' => [
 

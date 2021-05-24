@@ -1,6 +1,11 @@
 <?php
 return [
-    'login' => '6dd490faf9cb87a9862245da41170ff2',
-    'tran_key' => '024h1IlD',
-    'url' => 'https://test.placetopay.com/redirection',
+    'login' => env('P2P_LOGIN', ''),
+    'tranKey' => env('P2P_TRAN_KEY', ''),
+    'url' => env('P2P_URL', ''),
+    'type' => env('P2P_TYPE', 'rest'),
+    'rest' => [
+        'timeout' => env('P2P_TIMEOUT', 15),
+        'connect_timeout' => env('P2P_CONNECT_TIMEOUT', 5),
+    ],
 ];

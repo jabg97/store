@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('costumer_mobile', 40);
             $table->string('status', 20);
             $table->unsignedBigInteger('product_id');
+            $table->dateTime('request_expiration')->nullable();
             $table->string('request_id', 20)->nullable()->unique();
             $table->string('process_url', 200)->nullable()->unique();
             $table->foreign('product_id')->references('id')->on('products');

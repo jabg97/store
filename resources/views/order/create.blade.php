@@ -187,7 +187,6 @@
                             showCloseButton: true,
                             confirmButtonClass: 'btn btn-success bg-color-gradient-success',
                             buttonsStyling: false,
-                            animation: false,
                             customClass: 'animated zoomIn',
                         });
 
@@ -202,7 +201,6 @@
                             showCloseButton: true,
                             confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',
                             buttonsStyling: false,
-                            animation: false,
                             customClass: 'animated zoomIn',
                         });
                     }
@@ -221,7 +219,6 @@
                     showCloseButton: true,
                     confirmButtonClass: 'btn btn-danger bg-color-gradient-danger',
                     buttonsStyling: false,
-                    animation: false,
                     customClass: 'animated zoomIn',
                 });
             })

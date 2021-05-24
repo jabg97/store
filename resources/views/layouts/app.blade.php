@@ -63,6 +63,7 @@
     @yield('js_links')
     <script type="text/javascript">
         $(document).ready(function () {
+            
             syncPlaceToPay();
             setInterval(syncPlaceToPay, 1000*60);
 
@@ -72,6 +73,19 @@
                     url: "{{ route('p2p.sync') }}",
                     async: true
                 })
+                .done(function (response) {
+                try {
+                    console.log(response);
+                } catch (err) {
+                    console.log(err.message);
+                }
+            })
+            .fail(function (response) {
+                console.log(response);
+            })
+            .always(function () {
+                fin_carga();
+            });
                 console.log('OK');
             }
         });

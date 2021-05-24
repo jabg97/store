@@ -34,8 +34,9 @@ class Order extends Model
         'costumer_email',
         'costumer_mobile',
         'status',
+        'request_expiration',
         'product_id',
-        'request_id'
+        'request_id',
     ];
 
     /**
@@ -55,7 +56,7 @@ class Order extends Model
         'deleted_at',
     ];
 
-    public function send($msg)
+    public function notify($msg)
     {
         $data = array(
             'id' => $this->id,
@@ -64,7 +65,7 @@ class Order extends Model
             'product' => $this->product->name,
             'price' => $this->product->price,
             'status' => $this->status()->name,
-            'link' => url('/')."/order/".$this->id
+            'link' => url('/') . "/order/" . $this->id,
         );
 
         $from_email = "horariotps@gmail.com";
@@ -82,6 +83,6 @@ class Order extends Model
 
     public function status()
     {
-        return  Code::where('code', $this->status)->where('group', 'ORDER_STATUS')->first();
+        return Code::where('code', $this->status)->where('group', 'ORDER_STATUS')->first();
     }
 }

@@ -609,3 +609,7 @@ a .user-pic:focus {
 .pagination .page-item.active .page-link {
     background: #3A4D56 !important;
 }
+
+.dtr-bs-modal.modal{
+    z-index: 1049 !important;
+}

@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             $faker->addProvider(new \Bezhanov\Faker\Provider\Placeholder($faker));
             $product = new Product;
             $product->name = $faker->productName;
-            $product->price = $faker->numberBetween($min = 250000, $max = 3000000);
+            $product->price = $faker->numberBetween($min = 10000, $max = 1200000);
             $product->image_url = $faker->placeholder('500x500', 'jpg', substr($faker->hexcolor, 1), 'ffffff');
             $product->save();
         }

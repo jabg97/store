@@ -23,27 +23,30 @@
  </div>
  <hr />
  <div class="card-content">
-<div class="row" style="padding-bottom: 40px; padding-left: 20px;">
-    <div class="btn-group ">
-        <button type="button" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false"
-          class="btn dropdown-toggle right mr-2 mt-2 waves-effect hoverable {{ ($status) ? $status->css : 'btn-secondary' }}">
-         
-<i class="mr-1 fas fa-lg {{ ($status) ? $status->icon : 'fa-tasks' }}"></i>
-{{ ($status) ? $status->name : 'Mostrar todo' }}
-        </button>
-        <div class="dropdown-menu dropdown-menu-right">
-                <button onclick="mostrar_div('{{route('order.table',array('null'))}}', 'table')" class="dropdown-item waves-effect hoverable {{(!$status) ? 'ocultar' : ''}}" type="button">
-                        <i class="mr-1 fas fa-lg  fa-tasks danger-text"></i>
-                        Mostrar todo</button>
-                @foreach($list as $key => $row)
-                <button onclick="mostrar_div('{{route('order.table',array($row->code))}}', 'table')" class="dropdown-item waves-effect hoverable {{($status && $status->code == $row->code) ? 'ocultar' : ''}}" type="button">
-                        <i class="mr-1 fas fa-lg {{ $row->icon }}"></i>
-                    {{$row->name}}</button>
-                @endforeach
-               
-        </div>
-      </div></div>
+     <div class="row" style="padding-bottom: 40px; padding-left: 20px;">
+         <div class="btn-group ">
+             <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                 class="btn dropdown-toggle right mr-2 mt-2 waves-effect hoverable {{ ($status) ? $status->css : 'btn-secondary' }}">
+
+                 <i class="mr-1 fas fa-lg {{ ($status) ? $status->icon : 'fa-tasks' }}"></i>
+                 {{ ($status) ? $status->name : 'Mostrar todo' }}
+             </button>
+             <div class="dropdown-menu dropdown-menu-right">
+                 <button onclick="mostrar_div('{{route('order.table',array('null'))}}', 'table')"
+                     class="dropdown-item waves-effect hoverable {{(!$status) ? 'ocultar' : ''}}" type="button">
+                     <i class="mr-1 fas fa-lg  fa-tasks danger-text"></i>
+                     Mostrar todo</button>
+                 @foreach($list as $key => $row)
+                 <button onclick="mostrar_div('{{route('order.table',array($row->code))}}', 'table')"
+                     class="dropdown-item waves-effect hoverable {{($status && $status->code == $row->code) ? 'ocultar' : ''}}"
+                     type="button">
+                     <i class="mr-1 fas fa-lg {{ $row->icon }}"></i>
+                     {{$row->name}}</button>
+                 @endforeach
+
+             </div>
+         </div>
+     </div>
      <div class="table-responsive">
          <!-- Table  -->
          <table id="dtorders" class="table table-borderless table-hover display dt-responsive nowrap" cellspacing="0"
