@@ -37,11 +37,11 @@ Go into the project folder and type the following command.
 
 ```
 composer install
-cp .env.local .env
+cp .env.testing .env
 ```
 if you are using Windows CMD, you must use "copy" command insteand "cp" command
 ```
-copy .env.local .env
+copy .env.testing .env
 ```
 Configure .env file with your database credentials and then type the following command to execute migrations and seeders.
 
@@ -54,6 +54,9 @@ php artisan migrate:fresh --seed
 ```
 php artisan serve
 ```
+## Unit and Feature Test
+
+php artisan test
 
 ## Sync information
 

@@ -33,4 +33,3 @@ Route::resource(
 
 Route::get('order/create/{id}', 'OrderController@create')->name('order.create');
 Route::get('order/table/{status?}', 'OrderController@table')->name('order.table');
-Route::get('order/test/{id}', 'OrderController@test')->name('order.test');

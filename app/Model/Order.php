@@ -58,23 +58,29 @@ class Order extends Model
 
     public function notify($msg)
     {
-        $data = array(
-            'id' => $this->id,
-            'costumer_name' => $this->costumer_name,
-            'msg' => $msg,
-            'product' => $this->product->name,
-            'price' => $this->product->price,
-            'status' => $this->status()->name,
-            'link' => url('/') . "/order/" . $this->id,
-        );
+        try {
+            $data = array(
+                'id' => $this->id,
+                'costumer_name' => $this->costumer_name,
+                'msg' => $msg,
+                'product' => $this->product->name,
+                'price' => $this->product->price,
+                'status' => $this->status()->name,
+                'link' => url('/') . "/order/" . $this->id,
+            );
 
-        $from_email = "horariotps@gmail.com";
-        $from_name = "Store";
-        Mail::send('email.notification', $data, function ($message) use ($from_email, $from_name) {
-            $message->from($from_email, $from_name);
-            $message->to($this->costumer_email, $this->costumer_name)->subject('Actualización de estado');
-        });
+            $from_email = "horariotps@gmail.com";
+            $from_name = "Store";
+            Mail::send('email.notification', $data, function ($message) use ($from_email, $from_name) {
+                $message->from($from_email, $from_name);
+                $message->to($this->costumer_email, $this->costumer_name)->subject('Actualización de estado');
+            });
+            return "OK";
+        } catch (Throwable $e) {
+            return $e->getMessage();
+        }
     }
+
 
     public function product()
     {
@@ -84,5 +90,31 @@ class Order extends Model
     public function status()
     {
         return Code::where('code', $this->status)->where('group', 'ORDER_STATUS')->first();
+    }
+
+    
+    public function email($msg)
+    {
+        try {
+            $data = array(
+                'id' => $this->id,
+                'costumer_name' => $this->costumer_name,
+                'msg' => $msg,
+                'product' => $this->product->name,
+                'price' => $this->product->price,
+                'status' => "Creada",
+                'link' => "http://example.org",
+            );
+
+            $from_email = "horariotps@gmail.com";
+            $from_name = "Store";
+            Mail::send('email.notification', $data, function ($message) use ($from_email, $from_name) {
+                $message->from($from_email, $from_name);
+                $message->to($this->costumer_email, $this->costumer_name)->subject('Actualización de estado');
+            });
+            return "OK";
+        } catch (Throwable $e) {
+            return $e->getMessage();
+        }
     }
 }

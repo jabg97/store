@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Model\Code;
 use App\Model\Product;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {

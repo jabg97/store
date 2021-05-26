@@ -58,7 +58,7 @@ class OrderController extends Controller
             $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {
-                return response()->json(['status' => 500, 'message' => "Error en el formulario", 'messageJSON' => $validator]);
+                return response()->json(['status' => 500, 'message' => "Error en el formulario"]);
             } else {
                 $order = new Order;
                 $product = Product::findOrFail($request->product_id);
@@ -96,7 +96,7 @@ class OrderController extends Controller
             $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {
-                return response()->json(['status' => 500, 'message' => "Error en el formulario", 'messageJSON' => $validator]);
+                return response()->json(['status' => 500, 'message' => "Error en el formulario"]);
             } else {
                 $order = Order::findOrFail($id);
                 $product = Product::findOrFail($request->product_id);

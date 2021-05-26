@@ -112,18 +112,26 @@ class PlaceToPayController extends Controller
             "paymentMethod" => null,
         ];
     }
-    private static function queryOrder($place_to_pay, $order)
+    public static function queryOrder($place_to_pay, $order)
     {
-        $response = $place_to_pay->query($order->request_id);
-        $status = $response->status()->status();
-        $message = $response->status()->message();
-        if ($status == "APPROVED") {
-            $status = "PAYED";
-        }
-        if ($order->status != $status) {
-            $order->status = $status;
-            $order->save();
-            $order->notify($message);
+        try {
+            if (!$order->request_id) {
+                return "El Request ID no existe.";
+            }
+            $response = $place_to_pay->query($order->request_id);
+            $status = $response->status()->status();
+            $message = $response->status()->message();
+            if ($status == "APPROVED") {
+                $status = "PAYED";
+            }
+            if ($order->status != $status) {
+                $order->status = $status;
+                $order->save();
+                $order->notify($message);
+            }
+            return "El status de la orden ha sido actualizado.";
+        } catch (Throwable $e) {
+            return $e->getMessage();
         }
     }
 }
