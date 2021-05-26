@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Http\Controllers\PlaceToPayController;
 use App\Model\Order;
 use App\Model\Product;
-use Dnetix\Redirection\PlaceToPay;
+use Dnetix\Redirection\PlacetoPay;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -34,7 +34,7 @@ class PlaceToPayTest extends TestCase
         $order->product_id = $product->id;
         $order->status = "PAYED";
         $order->request_id = 1807197;
-        $msg = PlaceToPayController::queryOrder(new PlaceToPay(config('p2p')), $order);
+        $msg = PlaceToPayController::queryOrder(new PlacetoPay(config('p2p')), $order);
         $this->assertEquals($msg, "El status de la orden ha sido actualizado.");
     }
 
@@ -51,7 +51,7 @@ class PlaceToPayTest extends TestCase
         $order->costumer_email = "balantajaiver@gmail.com";
         $order->costumer_mobile = "123456789";
         $order->status = "CREATED";
-        $msg = PlaceToPayController::queryOrder(new PlaceToPay(config('p2p')), $order);
+        $msg = PlaceToPayController::queryOrder(new PlacetoPay(config('p2p')), $order);
         $this->assertEquals($msg, "El Request ID no existe.");
     }
 }

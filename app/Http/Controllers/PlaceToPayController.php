@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Model\Order;
 use Carbon\Carbon;
-use Dnetix\Redirection\PlaceToPay;
+use Dnetix\Redirection\PlacetoPay;
 use Illuminate\Support\Facades\Redirect;
 
-class PlaceToPayController extends Controller
+class PlacetoPayController extends Controller
 {
     public function __construct()
     {
@@ -17,7 +17,7 @@ class PlaceToPayController extends Controller
     public function sync()
     {
         try {
-            $place_to_pay = new PlaceToPay(config('p2p'));
+            $place_to_pay = new PlacetoPay(config('p2p'));
             $orders = Order::whereNotNull('request_id')
                 ->where('status', 'PENDING')->get();
             foreach ($orders as $key => $order) {
@@ -36,7 +36,7 @@ class PlaceToPayController extends Controller
     {
         try {
             $order = Order::findOrFail($id);
-            $place_to_pay = new PlaceToPay(config('p2p'));
+            $place_to_pay = new PlacetoPay(config('p2p'));
             self::queryOrder($place_to_pay, $order);
         } catch (Throwable $e) {
         }
@@ -47,7 +47,7 @@ class PlaceToPayController extends Controller
     {
         try {
             $order = Order::findOrFail($id);
-            $place_to_pay = new PlaceToPay(config('p2p'));
+            $place_to_pay = new PlacetoPay(config('p2p'));
             $request = self::createTestRequest($order);
             $response = $place_to_pay->request($request);
             if ($response->isSuccessful()) {
